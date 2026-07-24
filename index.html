@@ -258,8 +258,74 @@ body::before {
 .stat-box .num.amber { color: var(--accent2); }
 .stat-box .desc { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; margin-top: 0.2rem; }
 
+/* ── SERVICES ────────────────────────────────────── */
+#services { }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.8rem;
+}
+.service-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+  border-color: var(--accent);
+}
+.service-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: var(--surface2);
+  overflow: hidden;
+}
+.service-media img,
+.service-media video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.service-card:hover .service-media img,
+.service-card:hover .service-media video { transform: scale(1.04); }
+.service-media-badge {
+  position: absolute; top: 0.8rem; left: 0.8rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.65rem;
+  border-radius: 4px;
+  background: #0d0f14cc;
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--border);
+  color: var(--pixel);
+  z-index: 2;
+}
+.service-play-hint {
+  position: absolute; bottom: 0.8rem; right: 0.8rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  background: #0d0f14cc;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  z-index: 2;
+}
+.service-body { padding: 1.6rem 1.8rem 1.8rem; }
+.service-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 0.3rem; }
+.service-tech { font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; color: var(--accent2); margin-bottom: 0.9rem; letter-spacing: 0.03em; }
+.service-desc { font-size: 0.88rem; color: var(--text); line-height: 1.65; }
+
 /* ── PROJECTS ────────────────────────────────────── */
-#projects { }
+#projects { background: var(--surface); }
 .section-head { text-align: center; margin-bottom: 3.5rem; }
 .section-title { font-size: clamp(2rem, 5vw, 3.2rem); margin-top: 0.5rem; }
 .section-title span { color: var(--accent); }
@@ -276,7 +342,7 @@ body::before {
   gap: 1.5rem;
 }
 .proj-card {
-  background: var(--surface);
+  background: var(--surface2);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 2rem;
@@ -320,7 +386,7 @@ body::before {
 .proj-link:hover { color: var(--text); border-color: var(--accent); }
 
 /* ── SKILLS ──────────────────────────────────────── */
-#skills { background: var(--surface); }
+#skills { }
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -524,6 +590,7 @@ footer span { color: var(--accent); }
   <div class="nav-logo"><span>//</span> T.moin</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#journey">Journey</a></li>
@@ -618,12 +685,79 @@ footer span { color: var(--accent); }
   </div>
 </section>
 
+<!-- ── SERVICES ───────────────────────── -->
+<section id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label">// services.sh</span>
+      <h2 class="display section-title">Freelance <span>services</span>.</h2>
+      <div class="underline-bar"></div>
+    </div>
+    <div class="services-grid">
+
+      <!-- ✏️ EDIT each service-card below: media, title, tools, desc -->
+
+      <div class="service-card reveal">
+        <div class="service-media">
+          <span class="service-media-badge">Design</span>
+          <img src="assets/poster-tokyo-metro.jpg" alt="Tokyo Metro passenger guideline poster design">
+        </div>
+        <div class="service-body">
+          <div class="service-name">Poster & Graphic Design</div>
+          <div class="service-tech">Layout · Typography · Infographics</div>
+          <p class="service-desc">Clean, print-ready posters and infographics — from event flyers to informational guides. Balanced typography, clear hierarchy, and a finished look client-ready on the first draft.</p>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-media">
+          <span class="service-media-badge">Motion</span>
+          <span class="service-play-hint">▶ hover to preview</span>
+          <video src="assets/promo-reel.mp4" poster="assets/promo-reel-poster.jpg" muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="service-body">
+          <div class="service-name">Ad & Promo Video Editing</div>
+          <div class="service-tech">Motion Graphics · Typography · Sound Sync</div>
+          <p class="service-desc">Short-form promo and ad edits built to hook fast — kinetic typography, on-beat sound design, and pacing tuned for social platforms and brand promos.</p>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-media">
+          <span class="service-media-badge">Editing</span>
+          <span class="service-play-hint">▶ hover to preview</span>
+          <video src="assets/anime-edit-1.mp4" poster="assets/anime-edit-1-poster.jpg" muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="service-body">
+          <div class="service-name">Fast-Cut Anime / AMV Edits</div>
+          <div class="service-tech">Beat Sync · Color Grading · VFX Transitions</div>
+          <p class="service-desc">High-energy anime edits cut tight to the beat, with color grading, speed ramps, and custom transitions. Built for maximum impact in under 30 seconds.</p>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-media">
+          <span class="service-media-badge">Editing</span>
+          <span class="service-play-hint">▶ hover to preview</span>
+          <video src="assets/anime-edit-2.mp4" poster="assets/anime-edit-2-poster.jpg" muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="service-body">
+          <div class="service-name">Short-Form Content Edits</div>
+          <div class="service-tech">Reels / TikTok Pacing · Transitions · Captions</div>
+          <p class="service-desc">Scroll-stopping vertical edits for Reels, TikTok, and Shorts — tight pacing, clean transitions, and a style built to hold attention start to finish.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ── PROJECTS ───────────────────────── -->
 <section id="projects">
   <div class="container">
     <div class="section-head reveal">
       <span class="label amber">// projects[]</span>
-      <h2 class="display section-title">Things I've <span>shipped</span>.</h2>
+      <h2 class="display section-title">Game dev <span>shipped</span>.</h2>
       <div class="underline-bar"></div>
     </div>
     <div class="projects-grid">
@@ -854,6 +988,14 @@ const glow = document.getElementById('cursorGlow');
 document.addEventListener('mousemove', e => {
   glow.style.left = e.clientX + 'px';
   glow.style.top  = e.clientY + 'px';
+});
+
+/* ── Service video preview: play on hover, pause on leave ── */
+document.querySelectorAll('.service-media video').forEach(v => {
+  const card = v.closest('.service-card');
+  card.addEventListener('mouseenter', () => { v.currentTime = 0; v.play().catch(()=>{}); });
+  card.addEventListener('mouseleave', () => { v.pause(); });
+  card.addEventListener('touchstart', () => { v.play().catch(()=>{}); }, { passive: true });
 });
 </script>
 </body>
