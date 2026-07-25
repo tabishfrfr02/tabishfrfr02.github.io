@@ -281,8 +281,9 @@ body::before {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 10;
-  background: var(--surface2);
+  background: #000;
   overflow: hidden;
+  cursor: pointer;
 }
 .service-media img,
 .service-media video {
@@ -305,7 +306,7 @@ body::before {
   backdrop-filter: blur(6px);
   border: 1px solid var(--border);
   color: var(--pixel);
-  z-index: 2;
+  z-index: 3;
 }
 .service-play-hint {
   position: absolute; bottom: 0.8rem; right: 0.8rem;
@@ -317,8 +318,25 @@ body::before {
   background: #0d0f14cc;
   border: 1px solid var(--border);
   color: var(--muted);
-  z-index: 2;
+  z-index: 3;
+  pointer-events: none;
 }
+/* big centered play button on every video card */
+.play-btn {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: #0d0f14cc;
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 3;
+  pointer-events: none;
+  transition: background 0.2s, transform 0.2s;
+}
+.service-card:hover .play-btn { background: var(--accent); }
+.play-btn svg { width: 20px; height: 20px; fill: var(--text); margin-left: 3px; }
 .service-body { padding: 1.6rem 1.8rem 1.8rem; }
 .service-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 0.3rem; }
 .service-tech { font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; color: var(--accent2); margin-bottom: 0.9rem; letter-spacing: 0.03em; }
@@ -532,6 +550,41 @@ footer span { color: var(--accent); }
   transition: left 0.08s, top 0.08s;
 }
 
+/* ── VIDEO MODAL (click-to-play, guaranteed) ─────── */
+.video-modal {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(5,6,10,0.92);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 2rem;
+}
+.video-modal.open { display: flex; }
+.video-modal-inner {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+}
+.video-modal video {
+  width: 100%;
+  max-height: 82vh;
+  border-radius: 10px;
+  background: #000;
+  display: block;
+}
+.video-modal-close {
+  position: absolute; top: -3rem; right: 0;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+}
+.video-modal-close:hover { border-color: var(--accent); color: var(--accent); }
+
 /* ── RESPONSIVE ──────────────────────────────────── */
 @media (max-width: 800px) {
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -700,7 +753,7 @@ footer span { color: var(--accent); }
       <div class="service-card reveal">
         <div class="service-media">
           <span class="service-media-badge">Design</span>
-          <img src="poster-tokyo-metro.jpg" alt="poster design">
+          <img src="poster-tokyo-metro.jpg" alt="Tokyo Metro passenger guideline poster design">
         </div>
         <div class="service-body">
           <div class="service-name">Poster & Graphic Design</div>
@@ -710,12 +763,13 @@ footer span { color: var(--accent); }
       </div>
 
       <div class="service-card reveal reveal-delay-1">
-        <div class="service-media">
+        <div class="service-media" data-video="promo-reel.mp4">
           <span class="service-media-badge">Motion</span>
-       
-         <video autoplay muted loop playsinline preload="auto">
-  <source src="promo-reel.mp4" type="video/mp4">
-</video>
+          <span class="service-play-hint">▶ click to play</span>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <video muted loop playsinline preload="metadata" poster="promo-reel-poster.jpg">
+            <source src="promo-reel.mp4" type="video/mp4">
+          </video>
         </div>
         <div class="service-body">
           <div class="service-name">Ad & Promo Video Editing</div>
@@ -725,12 +779,13 @@ footer span { color: var(--accent); }
       </div>
 
       <div class="service-card reveal reveal-delay-2">
-        <div class="service-media">
+        <div class="service-media" data-video="anime-edit-1.mp4">
           <span class="service-media-badge">Editing</span>
-        
-         <video autoplay muted loop playsinline preload="auto">
-  <source src="anime-edit-1.mp4" type="video/mp4">
-</video>
+          <span class="service-play-hint">▶ click to play</span>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <video muted loop playsinline preload="metadata" poster="anime-edit-1-poster.jpg">
+            <source src="anime-edit-1.mp4" type="video/mp4">
+          </video>
         </div>
         <div class="service-body">
           <div class="service-name">Fast-Cut Anime / AMV Edits</div>
@@ -740,12 +795,13 @@ footer span { color: var(--accent); }
       </div>
 
       <div class="service-card reveal reveal-delay-3">
-        <div class="service-media">
+        <div class="service-media" data-video="anime-edit-2.mp4">
           <span class="service-media-badge">Editing</span>
-          
-          <video autoplay muted loop playsinline preload="auto">
-  <source src="anime-edit-2.mp4" type="video/mp4">
-</video>
+          <span class="service-play-hint">▶ click to play</span>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <video muted loop playsinline preload="metadata" poster="anime-edit-2-poster.jpg">
+            <source src="anime-edit-2.mp4" type="video/mp4">
+          </video>
         </div>
         <div class="service-body">
           <div class="service-name">Short-Form Content Edits</div>
@@ -955,6 +1011,14 @@ footer span { color: var(--accent); }
   <span>// Tabish Moin</span> · Built with C++ spirit and raw HTML · Lahore, Pakistan
 </footer>
 
+<!-- ── VIDEO MODAL: clicking any video card ALWAYS opens & plays this ── -->
+<div class="video-modal" id="videoModal">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" id="videoModalClose">✕ Close</button>
+    <video id="modalVideo" controls autoplay playsinline></video>
+  </div>
+</div>
+
 <!-- ── SCRIPTS ────────────────────────── -->
 <script>
 /* ── Typed text effect ── */
@@ -996,6 +1060,43 @@ document.addEventListener('mousemove', e => {
   glow.style.top  = e.clientY + 'px';
 });
 
+/* ── Service video preview: best-effort silent autoplay on hover (desktop) ── */
+document.querySelectorAll('.service-media video').forEach(v => {
+  const card = v.closest('.service-card');
+  card.addEventListener('mouseenter', () => { v.currentTime = 0; v.play().catch(()=>{}); });
+  card.addEventListener('mouseleave', () => { v.pause(); });
+});
+
+/* ── Click-to-play modal: GUARANTEED playback on any device/browser ──
+   Because this .play() call happens synchronously inside a real click
+   handler, browsers always allow it — autoplay restrictions only block
+   playback that isn't triggered by direct user interaction. ── */
+const modal = document.getElementById('videoModal');
+const modalVideo = document.getElementById('modalVideo');
+const modalClose = document.getElementById('videoModalClose');
+
+document.querySelectorAll('.service-media[data-video]').forEach(media => {
+  media.addEventListener('click', () => {
+    const src = media.getAttribute('data-video');
+    // pause any hover-preview video first
+    const previewVid = media.querySelector('video');
+    if (previewVid) previewVid.pause();
+
+    modalVideo.src = src;
+    modal.classList.add('open');
+    modalVideo.play().catch(()=>{ /* if this ever fails, controls are visible so the user can press play manually */ });
+  });
+});
+
+function closeModal() {
+  modal.classList.remove('open');
+  modalVideo.pause();
+  modalVideo.removeAttribute('src');
+  modalVideo.load();
+}
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
 </html>
