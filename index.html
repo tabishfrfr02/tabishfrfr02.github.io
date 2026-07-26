@@ -3,859 +3,307 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Tabish Moin — C++ Game Developer</title>
+<title>Tabish Moin — C++ Developer & CS Student</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   EDIT GUIDE — everything you'd want to change is in CONFIG
-   ============================================================ */
-
-/* ── COLORS ─────────────────────────────────────── */
 :root {
-  --bg:          #0d0f14;   /* page background */
-  --surface:     #13161f;   /* card / panel background */
-  --surface2:    #1a1e2a;   /* lighter surface */
-  --border:      #222636;   /* subtle border */
-  --text:        #c8cfe0;   /* body text */
-  --muted:       #5a6380;   /* subdued text */
-  --accent:      #7c5cbf;   /* primary purple */
-  --accent2:     #bf7c5c;   /* warm amber */
-  --glow:        #7c5cbf44; /* glow behind accent elements */
-  --pixel:       #3ef0a0;   /* terminal green — sparingly */
-  --danger:      #f05050;   /* red for "currently building" etc */
+  --bg:      #0d0f14;
+  --surface: #13161f;
+  --surf2:   #1a1e2a;
+  --border:  #222636;
+  --text:    #c8cfe0;
+  --muted:   #5a6380;
+  --accent:  #7c5cbf;
+  --amber:   #bf7c5c;
+  --glow:    #7c5cbf44;
+  --green:   #3ef0a0;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;}
+.display{font-family:'Syne',sans-serif;font-weight:800;line-height:1.05;letter-spacing:-0.02em;}
+.mono{font-family:'Share Tech Mono',monospace;}
+.label{font-family:'Share Tech Mono',monospace;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);}
+.label.am{color:var(--amber);}
+.container{max-width:1100px;margin:0 auto;padding:0 2rem;}
+section{padding:6rem 0;}
 
-/* ── RESET ───────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  font-size: 16px;
-  line-height: 1.7;
-  overflow-x: hidden;
-}
-a { color: inherit; text-decoration: none; }
-img { max-width: 100%; }
+body::before{content:'';position:fixed;inset:0;z-index:999;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);}
 
-/* ── TYPOGRAPHY ──────────────────────────────────── */
-.display {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-}
-.mono { font-family: 'Share Tech Mono', monospace; }
-.label {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-.label.amber { color: var(--accent2); }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:#0d0f14cc;backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Share Tech Mono',monospace;font-size:1.1rem;color:var(--green);}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
+.nav-links a:hover{color:var(--text);}
+.nav-cta{font-family:'Share Tech Mono',monospace;font-size:.78rem;padding:.5rem 1.2rem;
+  border:1px solid var(--accent);color:var(--accent);border-radius:4px;transition:background .2s,color .2s;}
+.nav-cta:hover{background:var(--accent);color:#fff;}
 
-/* ── LAYOUT ──────────────────────────────────────── */
-.container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-section { padding: 6rem 0; }
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding-top:5rem;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 70% 50%,#7c5cbf18 0%,transparent 70%),
+             radial-gradient(ellipse 40% 60% at 20% 80%,#bf7c5c10 0%,transparent 70%);}
+.hero-bg::after{content:'';position:absolute;inset:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:40px 40px;opacity:.35;
+  mask-image:radial-gradient(ellipse 80% 80% at center,black 30%,transparent 100%);}
+.hero-inner{position:relative;z-index:2;max-width:800px;}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.5rem;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:blink 1.4s steps(1) infinite;}
+@keyframes blink{50%{opacity:0;}}
+.hero-name{font-size:clamp(3rem,8vw,6rem);margin-bottom:1rem;}
+.hero-name .ac{color:var(--accent);}
+.hero-name .am{color:var(--amber);}
+.hero-sub{font-family:'Share Tech Mono',monospace;font-size:1.05rem;color:var(--muted);margin-bottom:2.5rem;max-width:520px;}
+.cursor{color:var(--green);animation:blink 1s steps(1) infinite;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-p{padding:.75rem 1.8rem;background:var(--accent);color:#fff;border-radius:6px;font-weight:600;font-size:.9rem;transition:box-shadow .2s,transform .15s;border:none;cursor:pointer;}
+.btn-p:hover{box-shadow:0 0 24px var(--glow);transform:translateY(-2px);}
+.btn-g{padding:.75rem 1.8rem;border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:.9rem;transition:border-color .2s,background .2s;cursor:pointer;}
+.btn-g:hover{border-color:var(--accent);background:var(--surface);}
+.hero-stats{margin-top:3.5rem;display:flex;gap:2.5rem;flex-wrap:wrap;}
+.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--accent);}
+.stat-num.am{color:var(--amber);}
+.stat-lbl{font-size:.75rem;color:var(--muted);margin-top:.25rem;letter-spacing:.08em;}
+.pixel-ship{position:absolute;right:8%;top:50%;transform:translateY(-50%);opacity:.12;font-size:10rem;
+  animation:float 6s ease-in-out infinite;z-index:1;pointer-events:none;user-select:none;}
+@keyframes float{0%,100%{transform:translateY(-50%) translateX(0);}50%{transform:translateY(-54%) translateX(8px);}}
+.glitch{position:relative;display:inline-block;}
+.glitch:hover::before,.glitch:hover::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;clip:rect(0,0,0,0);}
+.glitch:hover::before{color:var(--green);animation:ga .35s steps(2) forwards;}
+.glitch:hover::after{color:var(--amber);animation:gb .35s steps(2) forwards;}
+@keyframes ga{0%{clip:rect(20px,9999px,50px,0);transform:skew(.6deg);}50%{clip:rect(60px,9999px,80px,0);transform:skew(.3deg);}100%{clip:rect(0,0,0,0);}}
+@keyframes gb{0%{clip:rect(40px,9999px,70px,0);transform:skew(-.5deg) translateX(4px);}50%{clip:rect(10px,9999px,30px,0);transform:skew(.4deg) translateX(-3px);}100%{clip:rect(0,0,0,0);}}
 
-/* ── NAV ─────────────────────────────────────────── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 1.1rem 2rem;
-  display: flex; align-items: center; justify-content: space-between;
-  background: #0d0f14cc;
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 1.1rem;
-  color: var(--pixel);
-  letter-spacing: 0.05em;
-}
-.nav-logo span { color: var(--accent); }
-.nav-links { display: flex; gap: 2rem; list-style: none; }
-.nav-links a {
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--text); }
-.nav-cta {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.78rem;
-  padding: 0.5rem 1.2rem;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  border-radius: 4px;
-  transition: background 0.2s, color 0.2s;
-  letter-spacing: 0.08em;
-}
-.nav-cta:hover { background: var(--accent); color: #fff; }
+/* ABOUT */
+#about{background:var(--surface);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.about-hl{font-size:clamp(2rem,4vw,3rem);margin-bottom:1.5rem;}
+.about-hl em{font-style:normal;color:var(--accent);}
+.about-p{font-size:.97rem;margin-bottom:1rem;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.stat-box{background:var(--surf2);padding:1.4rem 1.2rem;text-align:center;}
+.stat-box .n{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent);display:block;}
+.stat-box .n.am{color:var(--amber);}
+.stat-box .d{font-size:.72rem;color:var(--muted);letter-spacing:.08em;margin-top:.2rem;}
 
-/* ── SCANLINE OVERLAY ─────────────────────────────── */
-body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: 200;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 3px,
-    rgba(0,0,0,0.04) 3px,
-    rgba(0,0,0,0.04) 4px
-  );
-}
+/* SECTION HEAD */
+.section-head{text-align:center;margin-bottom:3.5rem;}
+.section-title{font-size:clamp(2rem,5vw,3.2rem);margin-top:.5rem;}
+.section-title span{color:var(--accent);}
+.section-title span.am{color:var(--amber);}
+.bar{width:48px;height:3px;background:linear-gradient(90deg,var(--accent),var(--amber));margin:1rem auto 0;border-radius:2px;}
 
-/* ── HERO ─────────────────────────────────────────── */
-#hero {
-  min-height: 100vh;
-  display: flex; align-items: center;
-  padding-top: 5rem;
-  position: relative;
-  overflow: hidden;
-}
-.hero-bg {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 70% 50%, #7c5cbf18 0%, transparent 70%),
-    radial-gradient(ellipse 40% 60% at 20% 80%, #bf7c5c10 0%, transparent 70%);
-}
-/* pixel grid */
-.hero-bg::after {
-  content: '';
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.35;
-  mask-image: radial-gradient(ellipse 80% 80% at center, black 30%, transparent 100%);
-}
-.hero-inner {
-  position: relative; z-index: 2;
-  max-width: 800px;
-}
-.hero-tag {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-.hero-tag-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--pixel);
-  box-shadow: 0 0 10px var(--pixel);
-  animation: blink 1.4s steps(1) infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
-.hero-name {
-  font-size: clamp(3rem, 8vw, 6rem);
-  margin-bottom: 1rem;
-}
-.hero-name .accent { color: var(--accent); }
-.hero-name .amber  { color: var(--accent2); }
-.hero-sub {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 1.05rem;
-  color: var(--muted);
-  margin-bottom: 2.5rem;
-  max-width: 520px;
-}
-.hero-sub .typed-cursor { color: var(--pixel); animation: blink 1s steps(1) infinite; }
-.hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
-.btn-primary {
-  padding: 0.75rem 1.8rem;
-  background: var(--accent);
-  color: #fff;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: box-shadow 0.2s, transform 0.15s;
-  border: none; cursor: pointer;
-}
-.btn-primary:hover {
-  box-shadow: 0 0 24px var(--glow);
-  transform: translateY(-2px);
-}
-.btn-ghost {
-  padding: 0.75rem 1.8rem;
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 6px;
-  font-size: 0.9rem;
-  transition: border-color 0.2s, background 0.2s;
-  cursor: pointer;
-}
-.btn-ghost:hover { border-color: var(--accent); background: var(--surface); }
-.hero-stats {
-  margin-top: 3.5rem;
-  display: flex; gap: 2.5rem; flex-wrap: wrap;
-}
-.stat-item { line-height: 1; }
-.stat-num {
-  font-family: 'Syne', sans-serif;
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--accent);
-}
-.stat-num.amber { color: var(--accent2); }
-.stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; letter-spacing: 0.08em; }
+/* PROJECTS */
+#projects{background:var(--surface);}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
+.proj-card{background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:2rem;
+  position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s;}
+.proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:10px 10px 0 0;}
+.proj-card.pu::before{background:linear-gradient(90deg,var(--accent),#a07cf0);}
+.proj-card.am::before{background:linear-gradient(90deg,var(--amber),#f0c05c);}
+.proj-card.tl::before{background:linear-gradient(90deg,var(--green),#5cb4bf);}
+.proj-card.pk::before{background:linear-gradient(90deg,#f05090,#bf5ca0);}
+.proj-card:hover{transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.4);border-color:var(--accent);}
+.proj-card.am:hover{border-color:var(--amber);}
+.proj-card.tl:hover{border-color:var(--green);}
+.proj-card.pk:hover{border-color:#f05090;}
+.proj-icon{font-size:2.2rem;margin-bottom:1rem;display:block;}
+.proj-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1.25rem;margin-bottom:.3rem;}
+.proj-tech{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:var(--accent);margin-bottom:1rem;}
+.proj-card.am .proj-tech{color:var(--amber);}
+.proj-card.tl .proj-tech{color:var(--green);}
+.proj-card.pk .proj-tech{color:#f05090;}
+.proj-desc{font-size:.88rem;line-height:1.65;}
+.proj-links{margin-top:1.5rem;display:flex;gap:.75rem;}
+.proj-link{font-family:'Share Tech Mono',monospace;font-size:.72rem;letter-spacing:.08em;
+  padding:.4rem .9rem;border:1px solid var(--border);border-radius:4px;color:var(--muted);transition:color .2s,border-color .2s;}
+.proj-link:hover{color:var(--text);border-color:var(--accent);}
 
-/* floating pixel art decoration */
-.pixel-ship {
-  position: absolute;
-  right: 8%; top: 50%;
-  transform: translateY(-50%);
-  opacity: 0.12;
-  font-size: 10rem;
-  line-height: 1;
-  animation: float 6s ease-in-out infinite;
-  z-index: 1;
-  pointer-events: none;
-  user-select: none;
-}
-@keyframes float {
-  0%, 100% { transform: translateY(-50%) translateX(0); }
-  50%       { transform: translateY(-54%) translateX(8px); }
-}
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.skill-grp{background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:1.8rem;}
+.skill-grp-title{font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:.18em;
+  color:var(--amber);text-transform:uppercase;margin-bottom:1.2rem;}
+.tags{display:flex;flex-wrap:wrap;gap:.6rem;}
+.tag{padding:.35rem .8rem;background:var(--surface);border:1px solid var(--border);border-radius:5px;
+  font-size:.8rem;display:flex;align-items:center;gap:.4rem;transition:border-color .2s,color .2s;}
+.tag:hover{border-color:var(--accent);color:var(--accent);}
+.tag.learning{border-color:#3ef0a033;color:var(--green);}
 
-/* ── ABOUT ─────────────────────────────────────────── */
-#about { background: var(--surface); }
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-.about-eyebrow { margin-bottom: 1rem; }
-.about-headline {
-  font-size: clamp(2rem, 4vw, 3rem);
-  margin-bottom: 1.5rem;
-}
-.about-headline em { font-style: normal; color: var(--accent); }
-.about-body { color: var(--text); font-size: 0.97rem; margin-bottom: 1rem; }
-.stat-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-  background: var(--border); border: 1px solid var(--border);
-  border-radius: 8px; overflow: hidden;
-}
-.stat-box {
-  background: var(--surface2);
-  padding: 1.4rem 1.2rem;
-  text-align: center;
-}
-.stat-box .num {
-  font-family: 'Syne', sans-serif;
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--accent);
-  display: block;
-}
-.stat-box .num.amber { color: var(--accent2); }
-.stat-box .desc { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; margin-top: 0.2rem; }
+/* JOURNEY */
+.timeline{position:relative;padding-left:2.5rem;}
+.timeline::before{content:'';position:absolute;left:.9rem;top:.5rem;bottom:0;width:2px;
+  background:linear-gradient(to bottom,var(--accent) 0%,var(--amber) 60%,transparent 100%);}
+.tl-item{position:relative;margin-bottom:3rem;}
+.tl-dot{position:absolute;left:-2.5rem;top:.25rem;width:1.8rem;height:1.8rem;border-radius:50%;
+  background:var(--surf2);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:.85rem;}
+.tl-dot.done{background:var(--accent);border-color:var(--accent);}
+.tl-dot.now{border-color:var(--green);animation:pg 2s ease-in-out infinite;}
+.tl-dot.next{border-color:var(--amber);}
+.tl-dot.plan{border-color:var(--muted);}
+@keyframes pg{0%,100%{box-shadow:0 0 8px var(--green);}50%{box-shadow:0 0 20px var(--green);}}
+.tl-phase{font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:.2rem;}
+.tl-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.2rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
+.bdg{font-family:'Share Tech Mono',monospace;font-size:.6rem;padding:.2rem .6rem;border-radius:3px;letter-spacing:.1em;text-transform:uppercase;}
+.bdg.done{background:#7c5cbf33;color:var(--accent);border:1px solid var(--accent);}
+.bdg.now{background:#3ef0a033;color:var(--green);border:1px solid var(--green);}
+.bdg.next{background:#bf7c5c33;color:var(--amber);border:1px solid var(--amber);}
+.bdg.plan{background:#5a638033;color:var(--muted);border:1px solid var(--muted);}
+.tl-list{list-style:none;}
+.tl-list li{font-size:.88rem;padding:.25rem 0 .25rem 1.2rem;position:relative;}
+.tl-list li::before{content:'›';position:absolute;left:0;color:var(--accent);}
 
-/* ── SERVICES ────────────────────────────────────── */
-#services { }
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.8rem;
-}
-.service-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
-}
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-  border-color: var(--accent);
-}
-.service-media {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  background: #000;
-  overflow: hidden;
-  cursor: pointer;
-}
-.service-media img,
-.service-media video {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s ease;
-}
-.service-card:hover .service-media img,
-.service-card:hover .service-media video { transform: scale(1.04); }
-.service-media-badge {
-  position: absolute; top: 0.8rem; left: 0.8rem;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.3rem 0.65rem;
-  border-radius: 4px;
-  background: #0d0f14cc;
-  backdrop-filter: blur(6px);
-  border: 1px solid var(--border);
-  color: var(--pixel);
-  z-index: 3;
-}
-.service-play-hint {
-  position: absolute; bottom: 0.8rem; right: 0.8rem;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  padding: 0.3rem 0.6rem;
-  border-radius: 4px;
-  background: #0d0f14cc;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  z-index: 3;
-  pointer-events: none;
-}
-/* big centered play button on every video card */
-.play-btn {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 56px; height: 56px;
-  border-radius: 50%;
-  background: #0d0f14cc;
-  backdrop-filter: blur(6px);
-  border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 3;
-  pointer-events: none;
-  transition: background 0.2s, transform 0.2s;
-}
-.service-card:hover .play-btn { background: var(--accent); }
-.play-btn svg { width: 20px; height: 20px; fill: var(--text); margin-left: 3px; }
-.service-body { padding: 1.6rem 1.8rem 1.8rem; }
-.service-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 0.3rem; }
-.service-tech { font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; color: var(--accent2); margin-bottom: 0.9rem; letter-spacing: 0.03em; }
-.service-desc { font-size: 0.88rem; color: var(--text); line-height: 1.65; }
+/* CONTACT */
+#contact{background:var(--surface);text-align:center;}
+.contact-sub{font-size:1rem;color:var(--muted);max-width:480px;margin:.75rem auto 2.5rem;}
+.contact-links{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+.contact-btn{padding:.85rem 1.8rem;border:1px solid var(--border);border-radius:8px;background:var(--surf2);
+  font-size:.88rem;display:flex;align-items:center;gap:.6rem;transition:border-color .2s,box-shadow .2s,transform .15s;cursor:pointer;}
+.contact-btn:hover{border-color:var(--accent);box-shadow:0 0 20px var(--glow);transform:translateY(-2px);}
+.ci{font-size:1.1rem;}
+footer{padding:2rem;text-align:center;border-top:1px solid var(--border);
+  font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--muted);letter-spacing:.06em;}
+footer span{color:var(--accent);}
 
-/* ── PROJECTS ────────────────────────────────────── */
-#projects { background: var(--surface); }
-.section-head { text-align: center; margin-bottom: 3.5rem; }
-.section-title { font-size: clamp(2rem, 5vw, 3.2rem); margin-top: 0.5rem; }
-.section-title span { color: var(--accent); }
-.section-title span.amber { color: var(--accent2); }
-.underline-bar {
-  width: 48px; height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  margin: 1rem auto 0;
-  border-radius: 2px;
-}
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-.proj-card {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
-  cursor: default;
-}
-.proj-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  border-radius: 10px 10px 0 0;
-}
-.proj-card.purple::before { background: linear-gradient(90deg, var(--accent), #a07cf0); }
-.proj-card.amber::before  { background: linear-gradient(90deg, var(--accent2), #f0c05c); }
-.proj-card.teal::before   { background: linear-gradient(90deg, #3ef0a0, #5cb4bf); }
-.proj-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-  border-color: var(--accent);
-}
-.proj-card.amber:hover { border-color: var(--accent2); }
-.proj-card.teal:hover  { border-color: var(--pixel); }
-.proj-icon { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
-.proj-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.25rem; margin-bottom: 0.3rem; }
-.proj-tech { font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--accent); margin-bottom: 1rem; }
-.proj-card.amber .proj-tech { color: var(--accent2); }
-.proj-card.teal .proj-tech  { color: var(--pixel); }
-.proj-desc { font-size: 0.88rem; color: var(--text); line-height: 1.65; }
-.proj-links { margin-top: 1.5rem; display: flex; gap: 0.75rem; }
-.proj-link {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  padding: 0.4rem 0.9rem;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--muted);
-  transition: color 0.2s, border-color 0.2s;
-}
-.proj-link:hover { color: var(--text); border-color: var(--accent); }
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
 
-/* ── SKILLS ──────────────────────────────────────── */
-#skills { }
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-.skill-group {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.8rem;
-}
-.skill-group-title {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  color: var(--accent2);
-  text-transform: uppercase;
-  margin-bottom: 1.2rem;
-}
-.skill-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-.skill-tag {
-  padding: 0.35rem 0.8rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  font-size: 0.8rem;
-  color: var(--text);
-  display: flex; align-items: center; gap: 0.4rem;
-  transition: border-color 0.2s, color 0.2s;
-}
-.skill-tag:hover { border-color: var(--accent); color: var(--accent); }
-.skill-tag .icon { font-size: 0.9rem; }
+/* CURSOR GLOW */
+.cursor-glow{position:fixed;width:300px;height:300px;pointer-events:none;z-index:0;border-radius:50%;
+  background:radial-gradient(circle,#7c5cbf10 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .08s,top .08s;}
 
-/* ── JOURNEY ─────────────────────────────────────── */
-#journey {}
-.timeline { position: relative; padding-left: 2.5rem; }
-.timeline::before {
-  content: '';
-  position: absolute; left: 0.9rem; top: 0.5rem; bottom: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--accent) 0%, var(--accent2) 60%, transparent 100%);
-}
-.tl-item { position: relative; margin-bottom: 3rem; }
-.tl-dot {
-  position: absolute; left: -2.5rem; top: 0.25rem;
-  width: 1.8rem; height: 1.8rem;
-  border-radius: 50%;
-  background: var(--surface2);
-  border: 2px solid var(--accent);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem;
-}
-.tl-dot.done  { background: var(--accent); border-color: var(--accent); }
-.tl-dot.now   { border-color: var(--pixel); background: var(--surface2);
-                 box-shadow: 0 0 12px var(--pixel); animation: pulseGlow 2s ease-in-out infinite; }
-.tl-dot.next  { border-color: var(--accent2); }
-.tl-dot.plan  { border-color: var(--muted); }
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 8px var(--pixel); }
-  50%       { box-shadow: 0 0 20px var(--pixel); }
-}
-.tl-phase { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; margin-bottom: 0.2rem; }
-.tl-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; }
-.badge {
-  font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
-  padding: 0.2rem 0.6rem; border-radius: 3px; letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.badge.done     { background: #7c5cbf33; color: var(--accent); border: 1px solid var(--accent); }
-.badge.progress { background: #3ef0a033; color: var(--pixel); border: 1px solid var(--pixel); }
-.badge.upcoming { background: #bf7c5c33; color: var(--accent2); border: 1px solid var(--accent2); }
-.badge.planned  { background: #5a638033; color: var(--muted); border: 1px solid var(--muted); }
-.tl-list { list-style: none; margin: 0; padding: 0; }
-.tl-list li {
-  font-size: 0.88rem;
-  color: var(--text);
-  padding: 0.25rem 0 0.25rem 1.2rem;
-  position: relative;
-}
-.tl-list li::before {
-  content: '›';
-  position: absolute; left: 0;
-  color: var(--accent);
-}
-
-/* ── CONTACT ─────────────────────────────────────── */
-#contact { background: var(--surface); text-align: center; }
-.contact-subtitle { font-size: 1rem; color: var(--muted); max-width: 480px; margin: 0.75rem auto 2.5rem; }
-.contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-.contact-btn {
-  padding: 0.85rem 1.8rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface2);
-  color: var(--text);
-  font-size: 0.88rem;
-  display: flex; align-items: center; gap: 0.6rem;
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
-  cursor: pointer;
-}
-.contact-btn:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 20px var(--glow);
-  transform: translateY(-2px);
-}
-.contact-btn .ci { font-size: 1.1rem; }
-
-/* ── FOOTER ──────────────────────────────────────── */
-footer {
-  padding: 2rem;
-  text-align: center;
-  border-top: 1px solid var(--border);
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-}
-footer span { color: var(--accent); }
-
-/* ── SCROLL REVEAL ───────────────────────────────── */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-
-/* ── CURSOR GLOW ─────────────────────────────────── */
-.cursor-glow {
-  position: fixed;
-  width: 300px; height: 300px;
-  pointer-events: none;
-  z-index: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle, #7c5cbf10 0%, transparent 70%);
-  transform: translate(-50%, -50%);
-  transition: left 0.08s, top 0.08s;
-}
-
-/* ── VIDEO MODAL (click-to-play, guaranteed) ─────── */
-.video-modal {
-  position: fixed; inset: 0; z-index: 500;
-  background: rgba(5,6,10,0.92);
-  display: none;
-  align-items: center; justify-content: center;
-  padding: 2rem;
-}
-.video-modal.open { display: flex; }
-.video-modal-inner {
-  position: relative;
-  width: 100%;
-  max-width: 720px;
-}
-.video-modal video {
-  width: 100%;
-  max-height: 82vh;
-  border-radius: 10px;
-  background: #000;
-  display: block;
-}
-.video-modal-close {
-  position: absolute; top: -3rem; right: 0;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.85rem;
-  color: var(--text);
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  letter-spacing: 0.08em;
-}
-.video-modal-close:hover { border-color: var(--accent); color: var(--accent); }
-
-/* ── RESPONSIVE ──────────────────────────────────── */
-@media (max-width: 800px) {
-  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .skills-grid { grid-template-columns: 1fr; }
-  .pixel-ship { display: none; }
-  .nav-links { display: none; }
-  .hero-stats { gap: 1.5rem; }
-}
-@media (max-width: 560px) {
-  .container { padding: 0 1.2rem; }
-  section { padding: 4rem 0; }
-}
-
-/* ============================================================
-   GLITCH animation on the hero name (hover)
-   ============================================================ */
-.glitch {
-  position: relative;
-  display: inline-block;
-}
-.glitch:hover::before,
-.glitch:hover::after {
-  content: attr(data-text);
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 100%;
-  clip: rect(0, 0, 0, 0);
-}
-.glitch:hover::before {
-  color: var(--pixel);
-  animation: glitch-anim 0.35s steps(2) forwards;
-}
-.glitch:hover::after {
-  color: var(--accent2);
-  animation: glitch-anim2 0.35s steps(2) forwards;
-}
-@keyframes glitch-anim {
-  0%   { clip: rect(20px,9999px,50px,0); transform: skew(0.6deg); }
-  25%  { clip: rect(5px,9999px,25px,0); transform: skew(-0.4deg); }
-  50%  { clip: rect(60px,9999px,80px,0); transform: skew(0.3deg); }
-  100% { clip: rect(0,0,0,0); transform: skew(0); }
-}
-@keyframes glitch-anim2 {
-  0%   { clip: rect(40px,9999px,70px,0); transform: skew(-0.5deg) translateX(4px); }
-  50%  { clip: rect(10px,9999px,30px,0); transform: skew(0.4deg) translateX(-3px); }
-  100% { clip: rect(0,0,0,0); transform: skew(0) translateX(0); }
-}
+@media(max-width:800px){.about-grid{grid-template-columns:1fr;gap:2rem;}.skills-grid{grid-template-columns:1fr;}.pixel-ship{display:none;}.nav-links{display:none;}.hero-stats{gap:1.5rem;}}
+@media(max-width:560px){.container{padding:0 1.2rem;}section{padding:4rem 0;}}
 </style>
 </head>
 <body>
 
-<!-- cursor glow -->
 <div class="cursor-glow" id="cursorGlow"></div>
 
-<!-- ── NAV ─────────────────────────── -->
+<!-- NAV -->
 <nav>
   <div class="nav-logo"><span>//</span> T.moin</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#journey">Journey</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <!-- ✏️ EDIT: change the email below -->
   <a class="nav-cta" href="mailto:tabishmueen@gmail.com">Hire Me</a>
 </nav>
 
-<!-- ── HERO ─────────────────────────── -->
+<!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="pixel-ship">🚀</div>
   <div class="container">
     <div class="hero-inner">
       <div class="hero-tag">
-        <div class="hero-tag-dot"></div>
-        <!-- ✏️ EDIT: status line -->
-        <span class="mono" style="font-size:0.8rem;color:var(--muted);">Building games & shipping code from Lahore</span>
+        <div class="dot"></div>
+        <span class="mono" style="font-size:.8rem;color:var(--muted);">Building games &amp; shipping code from Lahore</span>
       </div>
-      <!-- ✏️ EDIT: your name -->
       <h1 class="display hero-name">
-        <span class="glitch" data-text="Tabish">Ta<span class="accent">b</span>ish</span><br>
-        <span class="glitch amber" data-text="Moin">Moin</span>
+        <span class="glitch" data-text="Tabish">Ta<span class="ac">b</span>ish</span><br>
+        <span class="glitch am" data-text="Moin">Moin</span>
       </h1>
-      <!-- ✏️ EDIT: tagline -->
       <p class="hero-sub" id="typedText"></p>
-      <div class="hero-buttons">
-        <a class="btn-primary" href="#projects">See My Work →</a>
-        <!-- ✏️ EDIT: your GitHub URL -->
-        <a class="btn-ghost" href="https://github.com/tabishfrfr02" target="_blank">GitHub ↗</a>
+      <div class="hero-btns">
+        <a class="btn-p" href="#projects">See My Work →</a>
+        <a class="btn-g" href="https://github.com/tabishfrfr02" target="_blank">GitHub ↗</a>
       </div>
       <div class="hero-stats">
-        <!-- ✏️ EDIT: your stats -->
-        <div class="stat-item">
-          <div class="stat-num">2</div>
-          <div class="stat-label">Games Shipped</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num amber">3.1+</div>
-          <div class="stat-label">CGPA @ FAST-NU</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num" style="color:var(--pixel);">C++</div>
-          <div class="stat-label">Primary Language</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">∞</div>
-          <div class="stat-label">Still Building</div>
-        </div>
+        <div><div class="stat-num">3</div><div class="stat-lbl">Games Shipped</div></div>
+        <div><div class="stat-num am">3.1+</div><div class="stat-lbl">CGPA @ FAST-NU</div></div>
+        <div><div class="stat-num" style="color:var(--green);">C++</div><div class="stat-lbl">Primary Language</div></div>
+        <div><div class="stat-num">∞</div><div class="stat-lbl">Still Building</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── ABOUT ─────────────────────────── -->
+<!-- ABOUT -->
 <section id="about">
   <div class="container">
     <div class="about-grid">
       <div class="reveal">
-        <div class="about-eyebrow">
-          <span class="label">// about.cpp</span>
-        </div>
-        <!-- ✏️ EDIT: about heading -->
-        <h2 class="display about-headline">Not just tutorials.<br><em>Real things, built.</em></h2>
-        <!-- ✏️ EDIT: your bio paragraphs -->
-        <p class="about-body">I'm a CS student at FAST-NU Lahore finishing my second semester. I don't wait until I know enough I pick something hard, figure it out along the way, and ship it.</p>
-        <p class="about-body">This year I built two complete games from scratch in C++ using SFML: a full arcade space shooter with boss fights, power-ups, and a particle engine, and a Candy Crush clone with real match-3 physics and chain reactions. No tutorials. No engines. Every line is mine.</p>
-        <p class="about-body">I'm also a video editor, graphic designer, and freelancer I work fast, communicate clearly, and I finish what I start.</p>
+        <span class="label" style="margin-bottom:1rem;display:block;">// about.cpp</span>
+        <h2 class="display about-hl">Not just tutorials.<br><em>Real things, built.</em></h2>
+        <p class="about-p">CS student at FAST-NUCES Lahore with a strong foundation in C++ and a genuine obsession with building things from scratch. I don't wait until I know enough — I pick something hard, figure it out along the way, and ship it.</p>
+        <p class="about-p">I've independently built three games in C++ and SFML — a full arcade space shooter with a three-boss mode, a Candy Crush clone with cascading match mechanics, and a Tic Tac Toe game with AI difficulty levels. I've also built a working 4-bit processor with an 8-instruction ISA for my Digital Logic Design coursework. Every project is raw OOP, manual memory management, no shortcuts.</p>
+        <p class="about-p">Currently expanding into web and app development — working through JavaScript, React, Node.js, and MongoDB with the goal of becoming a full-stack developer. React Native and Next.js are next on the list.</p>
       </div>
-      <div class="reveal reveal-delay-2">
+      <div class="reveal d2">
         <div class="stat-grid">
-          <div class="stat-box">
-            <span class="num">2</span>
-            <div class="desc">Games shipped from scratch</div>
-          </div>
-          <div class="stat-box">
-            <span class="num amber">SFML</span>
-            <div class="desc">Graphics engine</div>
-          </div>
-          <div class="stat-box">
-            <span class="num">0</span>
-            <div class="desc">Engines used (raw C++)</div>
-          </div>
-          <div class="stat-box">
-            <span class="num">∞</span>
-            <div class="desc">Still building</div>
-          </div>
+          <div class="stat-box"><span class="n">3</span><div class="d">Games from scratch</div></div>
+          <div class="stat-box"><span class="n am">SFML</span><div class="d">Graphics engine</div></div>
+          <div class="stat-box"><span class="n">0</span><div class="d">Engines used</div></div>
+          <div class="stat-box"><span class="n">∞</span><div class="d">Still building</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── SERVICES ───────────────────────── -->
-<section id="services">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="label">// services.sh</span>
-      <h2 class="display section-title">Freelance <span>services</span>.</h2>
-      <div class="underline-bar"></div>
-    </div>
-    <div class="services-grid">
-
-      <!-- ✏️ EDIT each service-card below: media, title, tools, desc -->
-
-      <div class="service-card reveal">
-        <div class="service-media">
-          <span class="service-media-badge">Design</span>
-          <img src="poster-tokyo-metro.jpg" alt="Tokyo Metro passenger guideline poster design">
-        </div>
-        <div class="service-body">
-          <div class="service-name">Poster & Graphic Design</div>
-          <div class="service-tech">Layout · Typography · Infographics</div>
-          <p class="service-desc">Clean, print-ready posters and infographics from event flyers to informational guides. Balanced typography, clear hierarchy, and a finished look client-ready on the first draft.</p>
-        </div>
-      </div>
-
-      <div class="service-card reveal reveal-delay-1">
-        <div class="service-media" data-video="promo-reel.mp4">
-          <span class="service-media-badge">Motion</span>
-          <span class="service-play-hint">▶ click to play</span>
-          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-          <video muted loop playsinline preload="metadata" poster="promo-reel-poster.jpg">
-            <source src="promo-reel.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="service-body">
-          <div class="service-name">Ad & Promo Video Editing</div>
-          <div class="service-tech">Motion Graphics · Typography · Sound Sync</div>
-          <p class="service-desc">Short-form promo and ad edits built to hook fast kinetic typography, on-beat sound design, and pacing tuned for social platforms and brand promos.</p>
-        </div>
-      </div>
-
-      <div class="service-card reveal reveal-delay-2">
-        <div class="service-media" data-video="anime-edit-1.mp4">
-          <span class="service-media-badge">Editing</span>
-          <span class="service-play-hint">▶ click to play</span>
-          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-          <video muted loop playsinline preload="metadata" poster="anime-edit-1-poster.jpg">
-            <source src="anime-edit-1.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="service-body">
-          <div class="service-name">Fast-Cut Anime / AMV Edits</div>
-          <div class="service-tech">Beat Sync · Color Grading · VFX Transitions</div>
-          <p class="service-desc">High-energy anime edits cut tight to the beat, with color grading, speed ramps, and custom transitions. Built for maximum impact in under 30 seconds.</p>
-        </div>
-      </div>
-
-      <div class="service-card reveal reveal-delay-3">
-        <div class="service-media" data-video="anime-edit-2.mp4">
-          <span class="service-media-badge">Editing</span>
-          <span class="service-play-hint">▶ click to play</span>
-          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-          <video muted loop playsinline preload="metadata" poster="anime-edit-2-poster.jpg">
-            <source src="anime-edit-2.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="service-body">
-          <div class="service-name">Short-Form Content Edits</div>
-          <div class="service-tech">Reels / TikTok Pacing · Transitions · Captions</div>
-          <p class="service-desc">Scroll-stopping vertical edits for Reels, TikTok, and Shorts tight pacing, clean transitions, and a style built to hold attention start to finish.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── PROJECTS ───────────────────────── -->
+<!-- PROJECTS -->
 <section id="projects">
   <div class="container">
     <div class="section-head reveal">
-      <span class="label amber">// projects[]</span>
-      <h2 class="display section-title">Game dev <span>shipped</span>.</h2>
-      <div class="underline-bar"></div>
+      <span class="label am">// projects[]</span>
+      <h2 class="display section-title">Things I've <span>shipped</span>.</h2>
+      <div class="bar"></div>
     </div>
-    <div class="projects-grid">
+    <div class="proj-grid">
 
-      <!-- ✏️ EDIT each proj-card below: name, tech, desc, links -->
-
-      <div class="proj-card purple reveal">
+      <div class="proj-card pu reveal">
         <span class="proj-icon">🚀</span>
         <div class="proj-name">Spicy Invaders</div>
         <div class="proj-tech">C++ · SFML · Raw OOP · No STL</div>
-        <p class="proj-desc">Full arcade space shooter built from scratch. Progressive enemy waves, pixel-perfect collision, three boss fights with unique attack patterns, three power-up types (EMP mechanic), spritesheet-rendered explosions, and a complete audio engine. Every class is mine.</p>
+        <p class="proj-desc">Full arcade space shooter built from scratch. Progressive enemy waves, pixel-perfect collision, three boss fights with unique attack patterns, EMP power-up mechanic, spritesheet-rendered explosions, and a complete audio engine. Every class is mine.</p>
         <div class="proj-links">
-          <!-- ✏️ EDIT: real GitHub link -->
           <a class="proj-link" href="https://github.com/tabishfrfr02/SpicyInvaders" target="_blank">GitHub ↗</a>
-          <a class="proj-link" href="#" target="_blank">Demo</a>
         </div>
       </div>
 
-      <div class="proj-card amber reveal reveal-delay-1">
+      <div class="proj-card am reveal d1">
         <span class="proj-icon">🍬</span>
         <div class="proj-name">Goated Candy</div>
         <div class="proj-tech">C++ · SFML · Match-3 · Gravity Sim</div>
-        <p class="proj-desc">Candy Crush clone on an 8×8 grid with a smart matching algorithm, real gravity simulation, cascading chain reactions, and four special candy types including a Color Bomb. Board refills, animations handwritten. No engine shortcuts.</p>
+        <p class="proj-desc">Candy Crush clone on an 8×8 grid — smart matching algorithm, real gravity simulation, cascading chain reactions, and four special candy types including Color Bomb. Board refills and animations all handwritten. No engine shortcuts.</p>
         <div class="proj-links">
           <a class="proj-link" href="https://github.com/tabishfrfr02/GoatedCandy" target="_blank">GitHub ↗</a>
-          <a class="proj-link" href="#" target="_blank">Demo</a>
         </div>
       </div>
 
-      <div class="proj-card teal reveal reveal-delay-2">
+      <div class="proj-card pk reveal d2">
+        <span class="proj-icon">🎮</span>
+        <div class="proj-name">Tic Tac Toe AI</div>
+        <div class="proj-tech">C++ · AI · Difficulty Levels · OOP</div>
+        <p class="proj-desc">Tic Tac Toe with a fully playable AI opponent across multiple difficulty levels. The computer adapts its strategy based on selected difficulty — from random moves to near-unbeatable play. Built entirely in C++ with a clean OOP design.</p>
+        <div class="proj-links">
+          <a class="proj-link" href="https://github.com/tabishfrfr02" target="_blank">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="proj-card tl reveal d3">
         <span class="proj-icon">🔩</span>
         <div class="proj-name">4-bit Processor</div>
         <div class="proj-tech">Digital Logic · LogicWorks · 74LS TTL ICs</div>
-        <p class="proj-desc">Designed and built a working 4-bit processor supporting an 8-instruction ISA using 74LS-series TTL ICs in LogicWorks. A semester project that went beyond the specs built to actually run programs.</p>
+        <p class="proj-desc">Designed and built a working 4-bit processor supporting an 8-instruction ISA using 74LS-series TTL ICs in LogicWorks. A Digital Logic Design semester project — built to actually run programs. Full marks.</p>
         <div class="proj-links">
-          <a class="proj-link" href="#" target="_blank">Details</a>
+          <a class="proj-link" href="https://github.com/tabishfrfr02" target="_blank">GitHub ↗</a>
         </div>
       </div>
 
@@ -863,114 +311,121 @@ footer span { color: var(--accent); }
   </div>
 </section>
 
-<!-- ── SKILLS ─────────────────────────── -->
+<!-- SKILLS -->
 <section id="skills">
   <div class="container">
     <div class="section-head reveal">
       <span class="label">// skills.h</span>
-      <h2 class="display section-title">What I <span class="amber">work</span> with.</h2>
-      <div class="underline-bar"></div>
+      <h2 class="display section-title">What I <span class="am">work</span> with.</h2>
+      <div class="bar"></div>
     </div>
     <div class="skills-grid">
-      <!-- ✏️ EDIT: skill groups and tags below -->
-      <div class="skill-group reveal">
-        <div class="skill-group-title">Languages</div>
-        <div class="skill-tags">
-          <span class="skill-tag"><span class="icon">⚙️</span> C</span>
-          <span class="skill-tag"><span class="icon">⚙️</span> C++</span>
-          <span class="skill-tag"><span class="icon">🎨</span> HTML / CSS</span>
-          <span class="skill-tag"><span class="icon">📝</span> Python (learning)</span>
+      <div class="skill-grp reveal">
+        <div class="skill-grp-title">Languages</div>
+        <div class="tags">
+          <span class="tag">⚙️ C</span>
+          <span class="tag">⚙️ C++</span>
+          <span class="tag learning">🌱 JavaScript</span>
+          <span class="tag learning">🌱 HTML / CSS</span>
         </div>
       </div>
-      <div class="skill-group reveal reveal-delay-1">
-        <div class="skill-group-title">Tools & Frameworks</div>
-        <div class="skill-tags">
-          <span class="skill-tag"><span class="icon">🎮</span> SFML</span>
-          <span class="skill-tag"><span class="icon">🌿</span> Git & GitHub</span>
-          <span class="skill-tag"><span class="icon">💻</span> VS Code</span>
-          <span class="skill-tag"><span class="icon">🔧</span> Visual Studio</span>
-          <span class="skill-tag"><span class="icon">⚡</span> GCC / G++</span>
+      <div class="skill-grp reveal d1">
+        <div class="skill-grp-title">Tools & Frameworks</div>
+        <div class="tags">
+          <span class="tag">🎮 SFML</span>
+          <span class="tag">🌿 Git & GitHub</span>
+          <span class="tag">💻 VS Code</span>
+          <span class="tag">🔧 Visual Studio</span>
+          <span class="tag">⚡ GCC / G++</span>
+          <span class="tag learning">🌱 React</span>
+          <span class="tag learning">🌱 Node.js</span>
         </div>
       </div>
-      <div class="skill-group reveal reveal-delay-2">
-        <div class="skill-group-title">CS Concepts</div>
-        <div class="skill-tags">
-          <span class="skill-tag"><span class="icon">🏛️</span> OOP</span>
-          <span class="skill-tag"><span class="icon">📊</span> Data Structures</span>
-          <span class="skill-tag"><span class="icon">🔁</span> Game Loops</span>
-          <span class="skill-tag"><span class="icon">⚡</span> Digital Logic</span>
-          <span class="skill-tag"><span class="icon">📁</span> File Handling</span>
-          <span class="skill-tag"><span class="icon">🧮</span> Memory Mgmt</span>
+      <div class="skill-grp reveal d2">
+        <div class="skill-grp-title">CS Concepts</div>
+        <div class="tags">
+          <span class="tag">🏛️ OOP</span>
+          <span class="tag">📊 Data Structures</span>
+          <span class="tag">🔁 Game Loops</span>
+          <span class="tag">⚡ Digital Logic</span>
+          <span class="tag">🧮 Memory Mgmt</span>
+          <span class="tag">📁 File Handling</span>
+          <span class="tag">🤖 Basic AI / Game Logic</span>
         </div>
       </div>
     </div>
+    <p style="text-align:center;margin-top:1.5rem;font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--green);">
+      🌱 = currently learning
+    </p>
   </div>
 </section>
 
-<!-- ── JOURNEY ────────────────────────── -->
+<!-- JOURNEY -->
 <section id="journey">
   <div class="container">
     <div class="section-head reveal">
-      <span class="label amber">// journey.log</span>
+      <span class="label am">// journey.log</span>
       <h2 class="display section-title">The <span>roadmap</span>.</h2>
-      <div class="underline-bar"></div>
+      <div class="bar"></div>
     </div>
-    <div style="max-width:660px; margin:0 auto;">
+    <div style="max-width:660px;margin:0 auto;">
       <div class="timeline">
 
-        <!-- ✏️ EDIT: timeline phases below -->
         <div class="tl-item reveal">
           <div class="tl-dot done">✓</div>
           <div class="tl-phase">Phase 1 · Foundations</div>
-          <div class="tl-title">First code, first game <span class="badge done">Done</span></div>
+          <div class="tl-title">First code, first game <span class="bdg done">Done</span></div>
           <ul class="tl-list">
             <li>Programming fundamentals in C++</li>
-            <li>Built Goated Candy first SFML project from scratch</li>
+            <li>Built Goated Candy — first SFML project from scratch</li>
             <li>Match-3 logic, cascade physics, swap animations</li>
           </ul>
         </div>
 
-        <div class="tl-item reveal reveal-delay-1">
+        <div class="tl-item reveal d1">
           <div class="tl-dot done">✓</div>
           <div class="tl-phase">Phase 2 · Systems & OOP</div>
-          <div class="tl-title">Levelled up architecture <span class="badge done">Done</span></div>
+          <div class="tl-title">Levelled up architecture <span class="bdg done">Done</span></div>
           <ul class="tl-list">
             <li>OOP in C++ — inheritance, polymorphism, encapsulation</li>
-            <li>Spicy Invaders boss AI, particle FX, full audio engine</li>
-            <li>4-bit processor in Digital Logic Design</li>
-            <li>CGPA 3.1+ after two semesters at FAST-NU</li>
+            <li>Spicy Invaders — boss AI, particle FX, full audio engine</li>
+            <li>Tic Tac Toe with multi-difficulty AI opponent</li>
+            <li>4-bit processor in Digital Logic Design — full marks</li>
+            <li>CGPA 3.1+ after two semesters at FAST-NUCES</li>
           </ul>
         </div>
 
-        <div class="tl-item reveal reveal-delay-2">
+        <div class="tl-item reveal d2">
           <div class="tl-dot now">🔥</div>
-          <div class="tl-phase">Phase 3 · Current (Summer 2025)</div>
-          <div class="tl-title">Building on the break <span class="badge progress">In Progress</span></div>
+          <div class="tl-phase">Phase 3 · Current (Summer 2026)</div>
+          <div class="tl-title">Expanding into Web Dev <span class="bdg now">In Progress</span></div>
           <ul class="tl-list">
-            <li>Deepening Data Structures & Algorithms</li>
-            <li>Getting everything on GitHub with proper docs</li>
-            <li>Open to internships and game dev roles</li>
+            <li>Learning JavaScript, React, Node.js, and MongoDB</li>
+            <li>Building full-stack projects alongside C++ work</li>
+            <li>Portfolio live at tabishfrfr02.github.io</li>
+            <li>Open to internships in software and game dev</li>
           </ul>
         </div>
 
-        <div class="tl-item reveal reveal-delay-3">
+        <div class="tl-item reveal d3">
           <div class="tl-dot next">⬡</div>
           <div class="tl-phase">Phase 4 · Next</div>
-          <div class="tl-title">Going deeper <span class="badge upcoming">Upcoming</span></div>
+          <div class="tl-title">Full Stack + Mobile <span class="bdg next">Upcoming</span></div>
           <ul class="tl-list">
+            <li>Next.js and React Native</li>
             <li>Advanced Data Structures & Algorithms</li>
-            <li>Computer Organization & Assembly</li>
             <li>First open source contribution</li>
+            <li>Deploy a full-stack web app</li>
           </ul>
         </div>
 
         <div class="tl-item reveal">
           <div class="tl-dot plan">🏆</div>
           <div class="tl-phase">Phase 5 · Beyond</div>
-          <div class="tl-title">The actual goal <span class="badge planned">Planned</span></div>
+          <div class="tl-title">The actual goal <span class="bdg plan">Planned</span></div>
           <ul class="tl-list">
             <li>Build something people actually use at scale</li>
-            <li>Ship a commercial game or open-source engine contribution</li>
+            <li>Ship a commercial game or a full-stack product</li>
             <li>Become the engineer who solves real problems</li>
           </ul>
         </div>
@@ -980,123 +435,42 @@ footer span { color: var(--accent); }
   </div>
 </section>
 
-<!-- ── CONTACT ────────────────────────── -->
+<!-- CONTACT -->
 <section id="contact">
   <div class="container">
     <div class="reveal">
       <span class="label">// reach_out()</span>
-      <h2 class="display section-title" style="font-size:clamp(2.2rem,5vw,3.5rem);margin-top:0.5rem;">
-        Let's <span>talk.</span>
-      </h2>
+      <h2 class="display section-title" style="font-size:clamp(2.2rem,5vw,3.5rem);margin-top:.5rem;">Let's <span>talk.</span></h2>
     </div>
-    <!-- ✏️ EDIT: contact subtitle -->
-    <p class="contact-subtitle reveal reveal-delay-1">Open to game dev internships, collaborations, freelance work, or just a chat. Every message gets a response.</p>
-    <div class="contact-links reveal reveal-delay-2">
-      <!-- ✏️ EDIT: your links -->
-      <a class="contact-btn" href="https://github.com/tabishfrfr02" target="_blank">
-        <span class="ci">🐙</span> GitHub
-      </a>
-      <a class="contact-btn" href="https://linkedin.com/in/tabish-moin-a605353b8" target="_blank">
-        <span class="ci">💼</span> LinkedIn
-      </a>
-      <a class="contact-btn" href="mailto:tabishmueen@gmail.com">
-        <span class="ci">📧</span> tabishmueen@gmail.com
-      </a>
+    <p class="contact-sub reveal d1">Open to internships, part-time roles, and opportunities in software development, game dev, or full-stack web. Every message gets a response.</p>
+    <div class="contact-links reveal d2">
+      <a class="contact-btn" href="https://github.com/tabishfrfr02" target="_blank"><span class="ci">🐙</span> GitHub</a>
+      <a class="contact-btn" href="https://linkedin.com/in/tabish-moin-a605353b8" target="_blank"><span class="ci">💼</span> LinkedIn</a>
+      <a class="contact-btn" href="mailto:tabishmueen@gmail.com"><span class="ci">📧</span> tabishmueen@gmail.com</a>
     </div>
   </div>
 </section>
 
-<!-- ── FOOTER ─────────────────────────── -->
-<footer>
-  <span>// Tabish Moin</span> · Built with C++ spirit and raw HTML · Lahore, Pakistan
-</footer>
+<footer><span>// Tabish Moin</span> · CS Student @ FAST-NUCES · Lahore, Pakistan</footer>
 
-<!-- ── VIDEO MODAL: clicking any video card ALWAYS opens & plays this ── -->
-<div class="video-modal" id="videoModal">
-  <div class="video-modal-inner">
-    <button class="video-modal-close" id="videoModalClose">✕ Close</button>
-    <video id="modalVideo" controls autoplay playsinline></video>
-  </div>
-</div>
-
-<!-- ── SCRIPTS ────────────────────────── -->
 <script>
-/* ── Typed text effect ── */
-const lines = [
-  "C++ Game Developer.",
-  "SFML enthusiast.",
-  "I ship, not just study.",
-  "Building from Lahore."
-]; // ✏️ EDIT: change these taglines
-let li = 0, ci = 0, deleting = false, pause = 0;
-const el = document.getElementById('typedText');
-function type() {
-  if (pause > 0) { pause--; setTimeout(type, 80); return; }
-  const cur = lines[li];
-  if (!deleting) {
-    el.innerHTML = cur.slice(0, ci+1) + '<span class="typed-cursor">|</span>';
-    ci++;
-    if (ci === cur.length) { deleting = true; pause = 28; }
-  } else {
-    el.innerHTML = cur.slice(0, ci-1) + '<span class="typed-cursor">|</span>';
-    ci--;
-    if (ci === 0) { deleting = false; li = (li + 1) % lines.length; pause = 6; }
-  }
-  setTimeout(type, deleting ? 40 : 75);
+const lines = ["C++ Game Developer.","CS Student @ FAST-NUCES.","I ship, not just study.","Learning Web Dev next.","Building from Lahore."];
+let li=0,ci=0,del=false,pause=0;
+const el=document.getElementById('typedText');
+function type(){
+  if(pause>0){pause--;setTimeout(type,80);return;}
+  const cur=lines[li];
+  if(!del){el.innerHTML=cur.slice(0,ci+1)+'<span class="cursor">|</span>';ci++;if(ci===cur.length){del=true;pause=28;}}
+  else{el.innerHTML=cur.slice(0,ci-1)+'<span class="cursor">|</span>';ci--;if(ci===0){del=false;li=(li+1)%lines.length;pause=6;}}
+  setTimeout(type,del?40:75);
 }
 type();
 
-/* ── Scroll reveal ── */
-const revealEls = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-}, { threshold: 0.12 });
-revealEls.forEach(el => observer.observe(el));
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(e=>ro.observe(e));
 
-/* ── Cursor glow ── */
-const glow = document.getElementById('cursorGlow');
-document.addEventListener('mousemove', e => {
-  glow.style.left = e.clientX + 'px';
-  glow.style.top  = e.clientY + 'px';
-});
-
-/* ── Service video preview: best-effort silent autoplay on hover (desktop) ── */
-document.querySelectorAll('.service-media video').forEach(v => {
-  const card = v.closest('.service-card');
-  card.addEventListener('mouseenter', () => { v.currentTime = 0; v.play().catch(()=>{}); });
-  card.addEventListener('mouseleave', () => { v.pause(); });
-});
-
-/* ── Click-to-play modal: GUARANTEED playback on any device/browser ──
-   Because this .play() call happens synchronously inside a real click
-   handler, browsers always allow it — autoplay restrictions only block
-   playback that isn't triggered by direct user interaction. ── */
-const modal = document.getElementById('videoModal');
-const modalVideo = document.getElementById('modalVideo');
-const modalClose = document.getElementById('videoModalClose');
-
-document.querySelectorAll('.service-media[data-video]').forEach(media => {
-  media.addEventListener('click', () => {
-    const src = media.getAttribute('data-video');
-    // pause any hover-preview video first
-    const previewVid = media.querySelector('video');
-    if (previewVid) previewVid.pause();
-
-    modalVideo.src = src;
-    modal.classList.add('open');
-    modalVideo.play().catch(()=>{ /* if this ever fails, controls are visible so the user can press play manually */ });
-  });
-});
-
-function closeModal() {
-  modal.classList.remove('open');
-  modalVideo.pause();
-  modalVideo.removeAttribute('src');
-  modalVideo.load();
-}
-modalClose.addEventListener('click', closeModal);
-modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+const glow=document.getElementById('cursorGlow');
+document.addEventListener('mousemove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';});
 </script>
 </body>
 </html>
